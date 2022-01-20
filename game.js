@@ -43,13 +43,12 @@ function checkAnswer(index) {
       }, 1000);
     }
 
-  }
-  else {
+  } else {
     // console.log("fail");
     playSound("wrong");
 
     var highestLevel = level - 1;
-    $("#level-title").html("Game Over. Highest Level: " + highestLevel + " Press Any Key to Restart");
+    $("#level-title").html("Game Over. Highest Level: " + highestLevel + " Click Blank Space to Restart");
     $("body").addClass("game-over");
     setTimeout(function() {
       $("body").removeClass("game-over");
@@ -65,17 +64,7 @@ function startOver() {
   level = 0;
 }
 
-$(".btn").click(event => {
-  var userChosenColour = event.target.id;
-  userClickedPattern.push(userChosenColour);
-  // console.log(userClickedPattern);
-  playSound(userChosenColour);
-  animatePress(userChosenColour);
-  checkAnswer(userClickedPattern.length - 1);
-});
-
-$(document).keypress(event => {
-  console.log(gameStarted);
+$("body").click(event => {
   if (gameStarted === false) {
     gameStarted = true;
     $("#level-title").html("Level " + level);
@@ -84,5 +73,29 @@ $(document).keypress(event => {
       nextSequenct();
     }, 100);
   }
+
   console.log(gameStarted);
 });
+
+$(".btn").click(event => {
+  event.stopPropagation();
+  var userChosenColour = event.target.id;
+  userClickedPattern.push(userChosenColour);
+  // console.log(userClickedPattern);
+  playSound(userChosenColour);
+  animatePress(userChosenColour);
+  checkAnswer(userClickedPattern.length - 1);
+});
+
+// $(document).keypress(event => {
+//   console.log(gameStarted);
+//   if (gameStarted === false) {
+//     gameStarted = true;
+//     $("#level-title").html("Level " + level);
+//
+//     setTimeout(function() {
+//       nextSequenct();
+//     }, 100);
+//   }
+//   // console.log(gameStarted);
+// });
